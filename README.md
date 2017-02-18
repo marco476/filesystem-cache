@@ -1,5 +1,5 @@
 # PHP Filesystem cache
-**Filesystem cache** is a quickly, simply and secure filesystem cache service builded with [PSR-6](http://www.php-fig.org/psr/psr-6/) rules.
+**Filesystem cache** is a quick, simple and secure filesystem cache service builded with [PSR-6](http://www.php-fig.org/psr/psr-6/) rules.
 
 ## Installation
 
