@@ -6,7 +6,7 @@
 You can install it with Composer:
 
 ```
-composer require minimalfw/filesystemCache
+composer require minimalfw/filesystem-cache
 ```
 
 ## How to use it

@@ -1,5 +1,5 @@
 {
-    "name": "minimalfw/filesystemCache",
+    "name": "minimalfw/filesystem-cache",
     "type": "library",
     "description": "PHP Filesystem cache with PSR-6 rules",
     "keywords": [
