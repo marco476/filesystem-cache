@@ -1,0 +1,7 @@
+vendor/
+cache/
+logs/
+web/
+composer.lock
+src/Controller/
+src/Views/

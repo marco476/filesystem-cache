@@ -1,0 +1,27 @@
+{
+    "name": "minimalfw/filesystemCache",
+    "type": "library",
+    "description": "PHP Filesystem cache with PSR-6 rules",
+    "keywords": [
+        "cache",
+        "minimal framework",
+        "filesystem cache",
+        "cache psr6"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marco Cante",
+            "email": "marco.cante.081@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}
