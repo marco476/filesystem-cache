@@ -1,5 +1,6 @@
 <?php
 namespace Service\Cache;
+use \Helper\DateHelper;
 
 class CacheItemPool implements CacheItemPoolInterface
 {
@@ -115,7 +116,7 @@ class CacheItemPool implements CacheItemPoolInterface
         $expire = $item['expire'];
         $expireDate = date_create()->setTimestamp($expire);
 
-        if ($expire === null || $cacheItem->expiresAt($expireDate)) {
+        if ($expire === null || DateHelper::isDateInFuture($expireDate)) {
             $cacheItem->set($item['value']);
         } else {
             $this->deleteItem($key);

@@ -1,6 +1,5 @@
 <?php
 namespace Service\Cache;
-
 use \Helper\DateHelper;
 
 class CacheItem implements CacheItemInterface
