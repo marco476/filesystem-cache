@@ -1,10 +1,16 @@
 <?php
 namespace Service\Cache;
+
 use \Helper\DateHelper;
 
 class CacheItemPool implements CacheItemPoolInterface
 {
     protected $queueSaved = array();
+
+    public function __construct($cacheDir = false)
+    {
+        CacheGlobal::setCacheDir($cacheDir);
+    }
 
     //Must return an istance of CacheItem
     public function getItem($key)

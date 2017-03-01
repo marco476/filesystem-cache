@@ -3,15 +3,31 @@ namespace Service\Cache;
 
 abstract class CacheGlobal
 {
-    static private $cacheDir;
+    const NO_VALID_CACHE_DIR = 'The cache directory setted not exist.';
 
-    //Return the path of cache
-    static public function getCacheDir()
+    private static $cacheDir;
+
+    //Return the cache path
+    public static function getCacheDir()
     {
-        if(self::$cacheDir === null){
-            self::$cacheDir = $_SERVER["DOCUMENT_ROOT"] . '/../cache/';
+        return self::$cacheDir !== null ? self::$cacheDir : self::setCacheDir();
+    }
+
+    //Set the cache path
+    public static function setCacheDir($cacheDir = false)
+    {
+        $definedCacheDir = $_SERVER["DOCUMENT_ROOT"] . '/cache/';
+
+        if (!empty($cacheDir)) {
+            $cacheDir = substr($cacheDir, -1) == '/' ? $cacheDir : ($cacheDir . '/');
+            
+            if (!is_dir($cacheDir)) {
+                throw new Exception(self::NO_VALID_CACHE_DIR);
+            }
+
+            $definedCacheDir = $cacheDir;
         }
 
-        return self::$cacheDir;
+        return self::$cacheDir = $definedCacheDir;
     }
 }
