@@ -18,7 +18,7 @@ See an example:
 require_once __DIR__ . '/../vendor/autoload.php';
 use \Service\Cache\CacheItemPool;
 
-$itemPool = new CacheItemPool();
+$itemPool = new CacheItemPool(__DIR__ . '/../cache');
 $itemCache = $itemPool->getItem('myArray');
 
 if ($itemCache->isHit()) {
@@ -38,6 +38,12 @@ if ($itemCache->isHit()) {
 }
 ```
 
+The **CacheItemPool** constructor accept the cache path. If you can't pass it, the default cache path will be:
+
+```PHP
+$_SERVER["DOCUMENT_ROOT"] . '/cache/'
+```
+
 For detail, you can see [PSR-6 documentation](http://www.php-fig.org/psr/psr-6/)
 
-> You must create a **cache** directory in your document root with permission to write and read!
+> Remember that you must create the **cache** directory with permission to write and read!
