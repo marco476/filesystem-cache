@@ -22,12 +22,17 @@ abstract class CacheGlobal
             $cacheDir = substr($cacheDir, -1) == '/' ? $cacheDir : ($cacheDir . '/');
             
             if (!is_dir($cacheDir)) {
-                throw new Exception(self::NO_VALID_CACHE_DIR);
+                throw new \Exception(self::NO_VALID_CACHE_DIR);
             }
 
             $definedCacheDir = $cacheDir;
         }
 
         return self::$cacheDir = $definedCacheDir;
+    }
+
+    public static function cleanAll()
+    {
+        self::$cacheDir = null;
     }
 }
