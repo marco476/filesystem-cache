@@ -27,6 +27,10 @@ class CacheItemPool implements CacheItemPoolInterface
 
     public function getItems(array $keys = array())
     {
+        if (empty($keys)) {
+            return false;
+        }
+
         $cacheItems = array();
 
         foreach ($keys as $key) {
@@ -119,11 +123,15 @@ class CacheItemPool implements CacheItemPoolInterface
     {
         $key = $cacheItem->getKey();
         include CacheGlobal::getCacheDir() . $key;
-        $expire = $item['expire'];
-        $expireDate = date_create()->setTimestamp($expire);
+        $itemExpire = $item['expire'];
+        $expire = $itemExpire === null ? $itemExpire : date_create()->setTimestamp($itemExpire);
 
-        if ($expire === null || DateHelper::isDateInFuture($expireDate)) {
+        //Check if cache item is valid or not.
+        if ($expire === null || DateHelper::isDateInFuture($expire)) {
             $cacheItem->set($item['value']);
+            if ($expire !== null) {
+                $cacheItem->expiresAt($expire);
+            }
         } else {
             $this->deleteItem($key);
         }
