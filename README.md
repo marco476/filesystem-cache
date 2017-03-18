@@ -22,8 +22,11 @@ See an example:
 ```PHP
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+
+use \Service\Cache\CacheDir;
 use \Service\Cache\CacheItemPool;
 
+CacheDir::setCacheDir($_SERVER["DOCUMENT_ROOT"] . '/../cache');
 $itemPool = new CacheItemPool(__DIR__ . '/../cache');
 $itemCache = $itemPool->getItem('myArray');
 
@@ -44,7 +47,7 @@ if ($itemCache->isHit()) {
 }
 ```
 
-The **CacheItemPool** constructor accept the cache path. If you can't pass it, the default cache path will be:
+The **setCacheDir static's CacheDir method** accept the cache path. If you can't pass it, the default cache path will be:
 
 ```PHP
 $_SERVER["DOCUMENT_ROOT"] . '/cache/'
