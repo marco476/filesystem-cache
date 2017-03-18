@@ -1,3 +1,9 @@
+[![Packagist](https://img.shields.io/packagist/v/marco476/filesystem-cache.svg)](https://packagist.org/packages/marco476/filesystem-cache)
+[![Code Climate](https://codeclimate.com/github/marco476/filesystem-cache/badges/gpa.svg)](https://codeclimate.com/github/marco476/filesystem-cache)
+[![Issue Count](https://codeclimate.com/github/marco476/filesystem-cache/badges/issue_count.svg)](https://codeclimate.com/github/marco476/filesystem-cache)
+[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D5.6-blue.svg)](http://php.net/manual/en/migration56.new-features.php)
+[![Packagist](https://img.shields.io/packagist/l/marco476/filesystem-cache.svg)](https://packagist.org/packages/marco476/filesystem-cache)
+
 # PHP Filesystem cache
 **Filesystem cache** is a quick, simple and secure filesystem cache service builded with [PSR-6](http://www.php-fig.org/psr/psr-6/) rules.
 
