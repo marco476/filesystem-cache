@@ -1,5 +1,6 @@
 <?php
 namespace Service\Cache;
+
 use \Helper\DateHelper;
 
 class CacheItem implements CacheItemInterface
@@ -20,7 +21,7 @@ class CacheItem implements CacheItemInterface
 
     public function isHit()
     {
-        return !$this->isKeyEmpty() && file_exists(CacheGlobal::getCacheDir() . $this->key);
+        return !$this->isKeyEmpty() && file_exists(CacheDir::getCacheDir() . $this->key);
     }
 
     public function setKey($key)

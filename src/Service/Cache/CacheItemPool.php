@@ -1,18 +1,13 @@
 <?php
 namespace Service\Cache;
-
 use \Helper\DateHelper;
 
 class CacheItemPool implements CacheItemPoolInterface
 {
+    //Quaue saved will be elaborate by commit method.
     protected $queueSaved = array();
 
-    public function __construct($cacheDir = false)
-    {
-        CacheGlobal::setCacheDir($cacheDir);
-    }
-
-    //Must return an istance of CacheItem
+    //Must return an istance of CacheItem.
     public function getItem($key)
     {
         $cacheItem = new CacheItem();
@@ -42,12 +37,12 @@ class CacheItemPool implements CacheItemPoolInterface
 
     public function hasItem($key)
     {
-        return file_exists(CacheGlobal::getCacheDir() . $key);
+        return file_exists(CacheDir::getCacheDir() . $key);
     }
 
     public function clear()
     {
-        if (empty($files = glob(CacheGlobal::getCacheDir() . '*'))) {
+        if (empty($files = glob(CacheDir::getCacheDir() . '*'))) {
             return false;
         }
 
@@ -62,7 +57,7 @@ class CacheItemPool implements CacheItemPoolInterface
 
     public function deleteItem($key)
     {
-        return $this->hasItem($key) && unlink(CacheGlobal::getCacheDir() . $key);
+        return $this->hasItem($key) && unlink(CacheDir::getCacheDir() . $key);
     }
 
     public function deleteItems(array $keys)
@@ -84,7 +79,7 @@ class CacheItemPool implements CacheItemPoolInterface
 
         $toWrite = '<?php $item=array(\'value\' => ' . var_export($cacheItem->get(), true) . ', \'expire\' => ' . var_export($cacheItem->getExpires(), true) . '); ?>';
 
-        return ($fileCache = fopen(CacheGlobal::getCacheDir() . $cacheItem->getKey(), 'w')) &&
+        return ($fileCache = fopen(CacheDir::getCacheDir() . $cacheItem->getKey(), 'w')) &&
                 fwrite($fileCache, $toWrite) &&
                 fclose($fileCache);
     }
@@ -122,7 +117,7 @@ class CacheItemPool implements CacheItemPoolInterface
     protected function initializeItem(CacheItem $cacheItem)
     {
         $key = $cacheItem->getKey();
-        include CacheGlobal::getCacheDir() . $key;
+        include CacheDir::getCacheDir() . $key;
         $itemExpire = $item['expire'];
         $expire = $itemExpire === null ? $itemExpire : date_create()->setTimestamp($itemExpire);
 

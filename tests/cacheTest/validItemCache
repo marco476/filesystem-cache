@@ -1,0 +1,8 @@
+<?php $item=array('value' => array (
+  'name' => 'Marco',
+  'friends' => 
+  array (
+    0 => 'Paolo',
+    1 => 'Luca',
+  ),
+), 'expire' => NULL); ?>

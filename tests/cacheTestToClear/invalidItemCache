@@ -1,0 +1,1 @@
+<?php $item=array('value' => 'testCache', 'expire' => 1014548551); ?>
