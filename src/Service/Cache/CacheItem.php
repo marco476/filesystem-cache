@@ -41,7 +41,7 @@ class CacheItem implements CacheItemInterface
 
     public function expiresAfter(string $dateIntervalString)
     {
-        $futureDate = date_create()->add(\DateInterval::createFromDateString($dateIntervalString));
+        $futureDate = date_create()->add(date_interval_create_from_date_string($dateIntervalString));
 
         return DateHelper::isDateInFuture($futureDate) && $this->expires = $futureDate->getTimestamp();
     }
