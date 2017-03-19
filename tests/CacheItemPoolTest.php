@@ -305,20 +305,132 @@ class CacheItemPoolTest extends TestCase
     {
         $dirCachePath = __DIR__ . '/cacheTest';
         $keyCopy = 'validItemCacheCopy';
+
         //I need copy the validItemCache file for preserv the test next time.
         copy($dirCachePath . '/validItemCache', $dirCachePath . '/' . $keyCopy);
 
         CacheDir::setCacheDir($dirCachePath);
         $itemPool = new CacheItemPool();
-        //Now validItemCacheCopy must existed.
+        //Now validItemCacheCopy exist.
         $this->assertTrue($itemPool->hasItem($keyCopy));
         //Now validItemCacheCopy must deleted.
         $this->assertTrue($itemPool->deleteItem($keyCopy));
-        //Now validItemCacheCopy must not existed.
+        //Now validItemCacheCopy not exist.
         $this->assertFalse($itemPool->hasItem($keyCopy));
     }
 
     /* ----------------------------------
             deleteItems METHOD TESTS!
        ---------------------------------- */
+    public function testDeleteItemsNotInCache()
+    {
+        CacheDir::setCacheDir(__DIR__ . '/cacheTest');
+        $itemPool = new CacheItemPool();
+        $this->assertFalse($itemPool->deleteItems(array('keyNotExist','key2NotExist')));
+    }
+
+    public function testDeleteItemsAllNotInCache()
+    {
+        $dirCachePath = __DIR__ . '/cacheTest';
+
+        $keyNotExist = 'keyNotExist';
+        $keyNotExist2 = 'keyNotExist2';
+
+        CacheDir::setCacheDir($dirCachePath);
+        $itemPool = new CacheItemPool();
+
+        //keyNotExist not exist.
+        $this->assertFalse($itemPool->hasItem($keyNotExist));
+
+        //keyNotExist2 not exist.
+        $this->assertFalse($itemPool->hasItem($keyNotExist2));
+
+        //keyNotExist not exist. keyNotExist2 not exist.
+        //deleteItems must return false.
+        $this->assertFalse($itemPool->deleteItems(array($keyNotExist, $keyNotExist2)));
+    }
+
+    public function testDeleteItemsOneInCacheAndOneNot()
+    {
+        $dirCachePath = __DIR__ . '/cacheTest';
+
+        $keyOriginal = 'validItemCache';
+        $keyCopy = 'validItemCacheCopy';
+        $keyNotExist = 'keyNotExist';
+
+        //I need copy the validItemCache file for preserv the test next time.
+        copy($dirCachePath . '/' . $keyOriginal, $dirCachePath . '/' . $keyCopy);
+
+        CacheDir::setCacheDir($dirCachePath);
+        $itemPool = new CacheItemPool();
+
+        //validItemCacheCopy exist.
+        $this->assertTrue($itemPool->hasItem($keyCopy));
+
+        //keyNotExist not exist.
+        $this->assertFalse($itemPool->hasItem($keyNotExist));
+
+        //validItemCacheCopy is deleted. keyNotExist not exist.
+        //deleteItems must return false.
+        $this->assertFalse($itemPool->deleteItems(array($keyCopy, $keyNotExist)));
+
+        //Now validItemCacheCopy not exist.
+        $this->assertFalse($itemPool->hasItem($keyCopy));
+    }
+
+    public function testDeleteItemsAllInCache()
+    {
+        $dirCachePath = __DIR__ . '/cacheTest';
+
+        $keyOriginal = 'validItemCache';
+        $keyCopy = 'validItemCacheCopy';
+        $keyCopy2 = 'validItemCacheCopy2';
+
+        //I need copy the validItemCache file for preserv the test next time.
+        copy($dirCachePath . '/' . $keyOriginal, $dirCachePath . '/' . $keyCopy);
+        copy($dirCachePath . '/' . $keyOriginal, $dirCachePath . '/' . $keyCopy2);
+
+        CacheDir::setCacheDir($dirCachePath);
+        $itemPool = new CacheItemPool();
+
+        //validItemCacheCopy exist.
+        $this->assertTrue($itemPool->hasItem($keyCopy));
+
+        //validItemCacheCopy2 exist.
+        $this->assertTrue($itemPool->hasItem($keyCopy2));
+
+        //All items are deleted.
+        //deleteItems must return true.
+        $this->assertTrue($itemPool->deleteItems(array($keyCopy, $keyCopy2)));
+
+        //Now validItemCacheCopy not exist.
+        $this->assertFalse($itemPool->hasItem($keyCopy));
+
+        //Now validItemCacheCopy2 not exist.
+        $this->assertFalse($itemPool->hasItem($keyCopy2));
+    }
+
+    /* ----------------------------------
+            saveDeferred METHOD TESTS!
+       ---------------------------------- */
+    public function testQueueOnStart()
+    {
+        $expect = array();
+        $itemPool = new CacheItemPool();
+
+        $this->assertEquals($expect, $itemPool->getQueueSaved());
+    }
+
+    public function testQueue()
+    {
+        $itemPool = new CacheItemPool();
+        
+        $keys = array('testItem', 'testItem2');
+        $expect = array($itemPool->getItem($keys[0]), $itemPool->getItem($keys[1]));
+
+        $itemPool->saveDeferred($itemPool->getItem($keys[0]));
+        $itemPool->saveDeferred($itemPool->getItem($keys[1]));
+
+        $this->assertEquals($expect, $itemPool->getQueueSaved());
+    }
 }
