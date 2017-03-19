@@ -27,7 +27,7 @@ use \Service\Cache\CacheDir;
 use \Service\Cache\CacheItemPool;
 
 CacheDir::setCacheDir($_SERVER["DOCUMENT_ROOT"] . '/../cache');
-$itemPool = new CacheItemPool(__DIR__ . '/../cache');
+$itemPool = new CacheItemPool();
 $itemCache = $itemPool->getItem('myArray');
 
 if ($itemCache->isHit()) {
