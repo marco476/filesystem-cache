@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/marco476/filesystem-cache.svg?branch=master)](https://travis-ci.org/marco476/filesystem-cache)
 [![Packagist](https://img.shields.io/packagist/v/marco476/filesystem-cache.svg)](https://packagist.org/packages/marco476/filesystem-cache)
 [![Code Climate](https://codeclimate.com/github/marco476/filesystem-cache/badges/gpa.svg)](https://codeclimate.com/github/marco476/filesystem-cache)
 [![Issue Count](https://codeclimate.com/github/marco476/filesystem-cache/badges/issue_count.svg)](https://codeclimate.com/github/marco476/filesystem-cache)
@@ -56,3 +57,11 @@ $_SERVER["DOCUMENT_ROOT"] . '/cache/'
 For detail, you can see [PSR-6 documentation](http://www.php-fig.org/psr/psr-6/)
 
 > Remember that you must create the **cache** directory with permission to write and read!
+
+## Unit Test
+
+You can run unit test from document root with:
+
+```
+vendor/bin/phpunit
+```
