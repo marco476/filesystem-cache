@@ -411,6 +411,52 @@ class CacheItemPoolTest extends TestCase
     }
 
     /* ----------------------------------
+              save METHOD TESTS!
+       ---------------------------------- */
+    public function testSaveItemNoKey()
+    {
+        $cacheItem = new CacheItem();
+        $itemPool = new CacheItemPool();
+
+        //Key not setted!
+        $this->assertFalse($itemPool->save($cacheItem));
+    }
+
+    public function testSaveItemNoValue()
+    {
+        $itemPool = new CacheItemPool();
+        $cacheItem = $itemPool->getItem("generalKey");
+
+        //Item value not setted!
+        $this->assertFalse($itemPool->save($cacheItem));
+    }
+
+    public function testSaveItem()
+    {
+        $dirCachePath = __DIR__ . '/cacheTest';
+
+        CacheDir::setCacheDir($dirCachePath);
+        $itemPool = new CacheItemPool();
+
+        $cacheKey = 'generalKey';
+
+        //The cache not exist yet.
+        $this->assertFalse($itemPool->hasItem($cacheKey));
+
+        $cacheItem = $itemPool->getItem($cacheKey);
+        $cacheItem->set('test');
+
+        //CacheItem is saved!
+        $this->assertTrue($itemPool->save($cacheItem));
+
+        //The cache now exist.
+        $this->assertTrue($itemPool->hasItem($cacheKey));
+
+        //Delete item cache for the next test!
+        $itemPool->deleteItem($cacheKey);
+    }
+
+    /* ----------------------------------
             saveDeferred METHOD TESTS!
        ---------------------------------- */
     public function testQueueOnStart()
